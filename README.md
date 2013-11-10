@@ -12,13 +12,16 @@ Members
 Instructions
 ------------
 
-### Run Locally
+### Usage
 
-I recommend using the Python SimpleHTTPServer
+Start a HTTP server in the directory. I recommend Python's SimpleHTTPServer.
 
     $ pythom -m SimpleHTTPServer 8080
 
-Then, go to localhost:8080 on your browser
+Then, go to localhost:8080 on your browser.
+
+Otherwise, visit http://visualizeschools.com/ for a relatively up-to-date
+deployment of the site.
 
 ### Convert Shapefiles to GeoJSON
 
