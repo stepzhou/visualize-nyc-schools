@@ -2,7 +2,8 @@ var width = 970,
     height = 900,
     centered;
 
-var svg = d3.select("div.page-header").append("svg")
+var svg = d3.select("div.page-header")
+  .append("svg")
   .attr("width", width)
   .attr("height", height);
 
@@ -96,11 +97,11 @@ function plotSchools() {
 
 var zoom = d3.behavior.zoom()
     .on("zoom",function() {
-        g.attr("transform","translate("+ 
+        map.attr("transform","translate("+ 
             d3.event.translate.join(",")+")scale("+d3.event.scale+")");
-        g.selectAll("circle")
+        map.selectAll("circle")
             .attr("d", path.projection(projection));
-        g.selectAll("path")  
+        map.selectAll("path")  
             .attr("d", path.projection(projection)); 
 
   });

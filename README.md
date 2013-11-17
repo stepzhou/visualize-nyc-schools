@@ -9,6 +9,13 @@ Members
 *   George Tsai
 *   Stephen Zhou
 
+Summary
+-------
+
+We are exploring and visualizing the relationship between the local New York
+City environment and school performance using public data sets from nyc.gov and
+NYC Open Data.
+
 Instructions
 ------------
 
