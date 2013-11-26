@@ -30,6 +30,24 @@ Then, go to localhost:8080 on your browser.
 Otherwise, visit http://visualizeschools.com/ for a relatively up-to-date
 deployment of the site.
 
+### Simplify Shapefiles
+
+The Shapefiles provided by NYC.gov are far too detailed for the purposes for
+this project's visualization. Converted to GeoJSON format, each map is a
+whooping 3.8 MB.
+
+To make the size more manageable so interactive components like pan and zoom
+aren't laggy, we should first simplify the maps. This can be done easily using
+qgis.
+
+1.  Open qgis and add the Shapefile vector
+2.  Vector > Geometry Tools > Simplify geometries
+3.  Select input features, set the Save as to another directory, pick a
+    tolerance level
+    *   As a reference, a tolerance of 10 cuts the filesize down from 3.8 MB to
+        926 KB 
+4.  Click OK
+
 ### Convert Shapefiles to GeoJSON
 
 NYC releases several maps as shapefiles on their website
@@ -47,4 +65,5 @@ the UTM coordinates into lat/long (either NAD83 or WGS72).
     *   CRS: either NAD83 or WGS 72 
 3.  Specify a file name
 4.  Save
+
 

@@ -1,8 +1,8 @@
-var width = 970,
+var width = 800,
     height = 900,
     centered;
 
-var svg = d3.select("div.page-header")
+var svg = d3.select("#map")
   .append("svg")
   .attr("width", width)
   .attr("height", height);
@@ -19,88 +19,136 @@ var div = d3.select("body").append("div")
   .attr("class", "tooltip")               
   .style("opacity", 0);
 
+
 var map = svg.append("g");
 
-d3.json("json/ny_school_districts-min.json", function(error, nyb) {
-  map.append("g")
-    .attr("id", "schooldistrict")
-    .selectAll(".state")
-    .data(nyb.features)
-    .enter()
-    .append("path")
-    .attr("class", function(d){ return d.properties.SchoolDist; })
-    .attr("d", path);
-    //.on("click", clicked");
+plotSchoolDistricts();
 
-    plotSchools();
-
+d3.select("#mapschool").on("click", function() {
+  map.remove();
+  map = svg.append("g");
+  plotSchoolDistricts();
 });
 
-function plotSchools() {
-  d3.json("json/schools.json", function(error, school) {
-    var mouseDuration = 150;
+function opacityLMH(property) {
+  if (property == "LOW")
+    { return 0.3; }
+  else if (property == "MED")
+    { return 0.6; }
+  else if (property == "HIGH")
+    { return 0.9; }
+  else
+    return 0.1;
+}
 
-    map.selectAll(".school")
-      .data(school.features)
-      .enter()
-      .append("circle")
-      .attr("id", "school")
-      .attr("class", function(d) { return d.properties.SCHOOLNAME; })
-      .attr("transform", function(d) { return "translate(" + projection(d.geometry.coordinates) + ")"; })
-      .attr("r", 2)
-      .style("fill", "lime")
-      .style("stroke", "white")
-      .style("opacity", 0.90)
-      .on("mouseover", function(d) {     
-          d3.select(this).transition().duration(mouseDuration).style("opacity", 1);
-          div.transition().duration(mouseDuration)
-          .style("opacity", 1)
-          div.text(d.properties.SCHOOLNAME)
-          .style("left", (d3.event.pageX) + "px")
-          .style("top", (d3.event.pageY -30) + "px");
-      })
-     .on("mouseout", function() {
-          d3.select(this)
-          .transition().duration(mouseDuration)
-          .style("opacity", 0.8);
-          div.transition().duration(mouseDuration)
-          .style("opacity", 0);
-     });
+function opacityCBA(property) {
+  if (property == "C")
+    { return 0.3; }
+  else if (property == "B")
+    { return 0.6; }
+  else if (property == "A")
+    { return 0.9; }
+  else
+    return 0.1;
+}
 
+d3.select("#cluster").on("click", function() {
+  d3.selectAll("circle")
+    .style("opacity", function(d) {
+      return opacityLMH(d.properties.CLUSTER);
+    });
+  return false;
+});
+
+d3.select("#gradrate").on("click", function() {
+  d3.selectAll("circle")
+    .style("opacity", function(d) {
+      return opacityLMH(d.properties.GRADRATE);
+    });
+  return false;
+});
+
+d3.select("#grade").on("click", function() {
+  d3.selectAll("circle")
+    .style("opacity", function(d) {
+      return opacityCBA(d.properties.GRADE);
+    });
+});
+
+d3.select("#regents").on("click", function() {
+  d3.selectAll("circle")
+    .style("opacity", function(d) {
+      return opacityLMH(d.properties.REGENTS);
+    });
+});
+
+d3.select("#sat").on("click", function() {
+  d3.selectAll("circle")
+    .style("opacity", function(d) {
+      return opacityLMH(d.properties.SAT);
+    });
+});
+
+function plotSchoolDistricts() {
+  d3.json("json/ny_school_districts-simplify2.json", function(error, nyb) {
+    map.attr("id", "schooldistrict")
+      .selectAll(".state")
+        .data(nyb.features)
+      .enter().append("path")
+        .attr("class", function(d){ return d.properties.SchoolDist; })
+        .attr("d", path);
+
+    plotSchools();
   });
 }
 
-// function clicked(d) {
-//   var x, y, k;
-// 
-//   if (d && centered !== d) {
-//     var centroid = path.centroid(d);
-//     x = centroid[0];
-//     y = centroid[1];
-//     k = 4;
-//     centered = d;
-//   } else {
-//     x = width / 2;
-//     y = height / 2;
-//     k = 1;
-//     centered = null;
-//   }
-// 
-//   g.selectAll("path")
-//     .classed("active", centered && function(d) { return d === centered; });
-// 
-//   g.transition()
-//     .duration(750)
-//     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
-//     .style("stroke-width", 1.5 / k + "px");
-// }
+function plotPrecincts() {
+}
+
+var circle_r = 3,
+    circle_stroke = 1;
+
+function plotSchools() {
+  d3.json("json/schools_with_info_trim.json", function(error, school) {
+    var mouseDuration = 150;
+
+    map.selectAll(".school")
+        .data(school.features)
+      .enter().append("circle")
+        .attr("id", "school")
+        .attr("class", function(d) { return d.properties.SCHOOLNAME; })
+        .attr("transform", function(d) { return "translate(" + projection(d.geometry.coordinates) + ")"; })
+        .attr("r", circle_r)
+        .style("fill", "lime")
+        .style("stroke-width", circle_stroke)
+        .style("stroke", "white")
+        .style("opacity", 0.90)
+        .on("mouseover", function(d) {     
+            d3.select(this).transition().duration(mouseDuration).style("opacity", 1);
+            div.transition().duration(mouseDuration)
+            .style("opacity", 1)
+            div.text(d.properties.SCHOOLNAME)
+            .style("left", (d3.event.pageX) + "px")
+            .style("top", (d3.event.pageY -30) + "px");
+        })
+       .on("mouseout", function() {
+            d3.select(this)
+            .transition().duration(mouseDuration)
+            .style("opacity", 0.8);
+            div.transition().duration(mouseDuration)
+            .style("opacity", 0);
+       });
+  });
+}
 
 var zoom = d3.behavior.zoom()
     .on("zoom",function() {
         map.attr("transform","translate("+ 
             d3.event.translate.join(",")+")scale("+d3.event.scale+")");
         map.selectAll("circle")
-            .attr("d", path.projection(projection));
+            .attr("d", path.projection(projection))
+            .attr("r", circle_r / d3.event.scale)
+            .style("stroke-width", circle_stroke / d3.event.scale);
         map.selectAll("path")  
             .attr("d", path.projection(projection)); 
 

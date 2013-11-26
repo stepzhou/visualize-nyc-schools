@@ -28,7 +28,7 @@ body {
 /* Reset the container */
 .container {
   max-width: none !important;
-  width: 970px;
+  width: 800px;
 }
 
 /* Demonstrate the grids */
