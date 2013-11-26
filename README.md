@@ -16,6 +16,19 @@ We are exploring and visualizing the relationship between the local New York
 City environment and school performance using public data sets from nyc.gov and
 NYC Open Data.
 
+Folder Hierarchy
+----------------
+
+    css/    custom css
+    js/     custom js
+    json/   json resource files
+    lib/    third-party sources
+        bootstrap/
+        d3/
+        jquery/
+    scripts/
+    index.html 
+
 Instructions
 ------------
 
