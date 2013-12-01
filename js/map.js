@@ -19,7 +19,6 @@ var div = d3.select("body").append("div")
   .attr("class", "tooltip")               
   .style("opacity", 0);
 
-
 var map = svg.append("g");
 
 plotSchoolDistricts();
@@ -32,13 +31,24 @@ d3.select("#mapschool").on("click", function() {
 
 function color(property) {
   if (property == "LOW" || property == "D" || property == "F")
-    { return "red"; }
+    { return "#FF2C00"; }
   else if (property == "MED" || property == "B" || property == "C")
-    { return "yellow"; }
+    { return "FFDE00"; }
   else if (property == "HIGH" || property == "A")
-    { return "green"; }
+    { return "00B945"; }
   else
     return "gray";
+}
+
+function colorDistrict(property) {
+  if (property == "LOW") 
+    { return "#BCFFFF"; }
+  else if (property == "MED") 
+    { return "#7AF5F5"; }
+  else if (property == "HIGH")
+    { return "#34DDDD"; }
+  else 
+    return "black";
 }
 
 function toTitleCase(str)
@@ -90,7 +100,8 @@ function plotSchoolDistricts() {
         .data(nyb.features)
       .enter().append("path")
         .attr("class", function(d){ return d.properties.SchoolDist; })
-        .attr("d", path);
+        .attr("d", path)
+        .attr("fill", colorDistrict());
 
     plotSchools();
   });
@@ -99,8 +110,7 @@ function plotSchoolDistricts() {
 function plotPrecincts() {
 }
 
-var circle_r = 3,
-    circle_stroke = 1;
+var circle_r = 4;
 
 function plotSchools() {
   d3.json("json/schools_with_info_trim.json", function(error, school) {
@@ -113,17 +123,16 @@ function plotSchools() {
         .attr("class", function(d) { return d.properties.SCHOOLNAME; })
         .attr("transform", function(d) { return "translate(" + projection(d.geometry.coordinates) + ")"; })
         .attr("r", circle_r)
+        .attr("stroke-width", 0)
         .style("fill", "lime")
-        .style("stroke-width", circle_stroke)
-        .style("stroke", "white")
         .style("opacity", 0.90)
         .on("mouseover", function(d) {     
             d3.select(this).transition().duration(mouseDuration).style("opacity", 1);
             div.transition().duration(mouseDuration)
             .style("opacity", 1)
-            div.text(toTitleCase(d.properties.SCHOOLNAME) + "\n Avg SAT is " + d.properties.SAT)
+            div.html(toTitleCase(d.properties.SCHOOLNAME) + " <br> Avg SAT is " + d.properties.SAT)
             .style("left", (d3.event.pageX + 10) + "px")
-            .style("top", (d3.event.pageY -30) + "px");
+            .style("top", (d3.event.pageY -30) + "px")
             .style("height", "50px");
         })
        .on("mouseout", function() {
@@ -143,7 +152,6 @@ var zoom = d3.behavior.zoom()
         map.selectAll("circle")
             .attr("d", path.projection(projection))
             .attr("r", circle_r / d3.event.scale)
-            .style("stroke-width", circle_stroke / d3.event.scale);
         map.selectAll("path")  
             .attr("d", path.projection(projection)); 
 
