@@ -48,7 +48,7 @@ function toTitleCase(str)
 
 d3.select("#cluster").on("click", function() {
   d3.selectAll("circle")
-    .style("color", function(d) {
+    .style("fill", function(d) {
       return color(d.properties.CLUSTER);
     });
   return false;
@@ -56,7 +56,7 @@ d3.select("#cluster").on("click", function() {
 
 d3.select("#gradrate").on("click", function() {
   d3.selectAll("circle")
-    .style("color", function(d) {
+    .style("fill", function(d) {
       return color(d.properties.GRADRATE);
     });
   return false;
@@ -64,21 +64,21 @@ d3.select("#gradrate").on("click", function() {
 
 d3.select("#grade").on("click", function() {
   d3.selectAll("circle")
-    .style("color", function(d) {
+    .style("fill", function(d) {
       return color(d.properties.GRADE);
     });
 });
 
 d3.select("#regents").on("click", function() {
   d3.selectAll("circle")
-    .style("color", function(d) {
+    .style("fill", function(d) {
       return color(d.properties.REGENTS);
     });
 });
 
 d3.select("#sat").on("click", function() {
   d3.selectAll("circle")
-    .style("color", function(d) {
+    .style("fill", function(d) {
       return color(d.properties.SAT);
     });
 });
