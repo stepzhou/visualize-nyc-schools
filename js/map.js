@@ -30,6 +30,7 @@ d3.select("#mapschool").on("click", function() {
   plotSchoolDistricts();
 });
 
+// opacity gradient for Low, Med, High properties
 function opacityLMH(property) {
   if (property == "LOW")
     { return 0.3; }
@@ -41,6 +42,7 @@ function opacityLMH(property) {
     return 0.1;
 }
 
+// opacity gradient for A, B, C property
 function opacityCBA(property) {
   if (property == "C")
     { return 0.3; }
@@ -52,12 +54,12 @@ function opacityCBA(property) {
     return 0.1;
 }
 
+// group by dropdown handling
 d3.select("#cluster").on("click", function() {
   d3.selectAll("circle")
     .style("opacity", function(d) {
       return opacityLMH(d.properties.CLUSTER);
     });
-  return false;
 });
 
 d3.select("#gradrate").on("click", function() {
@@ -65,7 +67,6 @@ d3.select("#gradrate").on("click", function() {
     .style("opacity", function(d) {
       return opacityLMH(d.properties.GRADRATE);
     });
-  return false;
 });
 
 d3.select("#grade").on("click", function() {
@@ -89,6 +90,7 @@ d3.select("#sat").on("click", function() {
     });
 });
 
+// plot the school districts and school points
 function plotSchoolDistricts() {
   d3.json("json/ny_school_districts-simplify2.json", function(error, nyb) {
     map.attr("id", "schooldistrict")
@@ -105,6 +107,7 @@ function plotSchoolDistricts() {
 function plotPrecincts() {
 }
 
+// plot the school points
 var circle_r = 3,
     circle_stroke = 1;
 
@@ -141,6 +144,7 @@ function plotSchools() {
   });
 }
 
+// zoom
 var zoom = d3.behavior.zoom()
     .on("zoom",function() {
         map.attr("transform","translate("+ 
