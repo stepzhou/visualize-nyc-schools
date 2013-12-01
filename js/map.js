@@ -30,16 +30,15 @@ d3.select("#mapschool").on("click", function() {
   plotSchoolDistricts();
 });
 
-// opacity gradient for Low, Med, High properties
-function opacityLMH(property) {
-  if (property == "LOW")
-    { return 0.3; }
-  else if (property == "MED")
-    { return 0.6; }
-  else if (property == "HIGH")
-    { return 0.9; }
+function color(property) {
+  if (property == "LOW" || property == "D" || property == "F")
+    { return "red"; }
+  else if (property == "MED" || property == "B" || property == "C")
+    { return "yellow"; }
+  else if (property == "HIGH" || property == "A")
+    { return "green"; }
   else
-    return 0.1;
+    return "gray";
 }
 
 // opacity gradient for A, B, C property
@@ -54,39 +53,44 @@ function opacityCBA(property) {
     return 0.1;
 }
 
+function toTitleCase(str)
+{
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
+
 // group by dropdown handling
 d3.select("#cluster").on("click", function() {
   d3.selectAll("circle")
-    .style("opacity", function(d) {
-      return opacityLMH(d.properties.CLUSTER);
+    .style("fill", function(d) {
+      return color(d.properties.CLUSTER);
     });
 });
 
 d3.select("#gradrate").on("click", function() {
   d3.selectAll("circle")
-    .style("opacity", function(d) {
-      return opacityLMH(d.properties.GRADRATE);
+    .style("fill", function(d) {
+      return color(d.properties.GRADRATE);
     });
 });
 
 d3.select("#grade").on("click", function() {
   d3.selectAll("circle")
-    .style("opacity", function(d) {
-      return opacityCBA(d.properties.GRADE);
+    .style("fill", function(d) {
+      return color(d.properties.GRADE);
     });
 });
 
 d3.select("#regents").on("click", function() {
   d3.selectAll("circle")
-    .style("opacity", function(d) {
-      return opacityLMH(d.properties.REGENTS);
+    .style("fill", function(d) {
+      return color(d.properties.REGENTS);
     });
 });
 
 d3.select("#sat").on("click", function() {
   d3.selectAll("circle")
-    .style("opacity", function(d) {
-      return opacityLMH(d.properties.SAT);
+    .style("fill", function(d) {
+      return color(d.properties.SAT);
     });
 });
 
@@ -130,9 +134,10 @@ function plotSchools() {
             d3.select(this).transition().duration(mouseDuration).style("opacity", 1);
             div.transition().duration(mouseDuration)
             .style("opacity", 1)
-            div.text(d.properties.SCHOOLNAME)
-            .style("left", (d3.event.pageX) + "px")
-            .style("top", (d3.event.pageY -30) + "px");
+            div.text(toTitleCase(d.properties.SCHOOLNAME) + "\n Avg SAT is " + d.properties.SAT)
+            .style("left", (d3.event.pageX + 10) + "px")
+            .style("top", (d3.event.pageY -30) + "px")
+            .style("height", "50px");
         })
        .on("mouseout", function() {
             d3.select(this)
