@@ -121,9 +121,10 @@ function plotSchools() {
             d3.select(this).transition().duration(mouseDuration).style("opacity", 1);
             div.transition().duration(mouseDuration)
             .style("opacity", 1)
-            div.text(toTitleCase(d.properties.SCHOOLNAME))
+            div.text(toTitleCase(d.properties.SCHOOLNAME) + "\n Avg SAT is " + d.properties.SAT)
             .style("left", (d3.event.pageX) + "px")
             .style("top", (d3.event.pageY -30) + "px");
+            .style("height", "50px");
         })
        .on("mouseout", function() {
             d3.select(this)
