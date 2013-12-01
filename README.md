@@ -5,7 +5,7 @@ Members
 -------
 
 *   Hannah Keiler
-*   Jeremy Myers
+*   Jeremy Meyers
 *   George Tsai
 *   Stephen Zhou
 
