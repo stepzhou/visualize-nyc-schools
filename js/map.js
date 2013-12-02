@@ -144,7 +144,11 @@ function plotSchools() {
             .style("top", (d3.event.pageY -30) + "px")
             .style("height", "50px");
 
-            div.html(toTitleCase(d.properties.SCHOOLNAME) + " <br> Avg SAT is " + d.properties.SAT)
+            var toolText = toTitleCase(d.properties.SCHOOLNAME)
+            if (d.properties.SAT != "<NA>") {
+                toolText += "<br /> The average SAT score is " + d.properties.SAT;
+            }
+            div.html(toolText);
         })
         .on("mouseout", function() {
             d3.select(this)
