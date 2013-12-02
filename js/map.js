@@ -48,7 +48,7 @@ function colorDistrict(property) {
   else if (property == "HIGH")
     { return "#34DDDD"; }
   else 
-    return "black";
+    return "gray";
 }
 
 function toTitleCase(str)
@@ -104,14 +104,14 @@ d3.select("#sat").on("click", function() {
 
 // plot the school districts and school points
 function plotSchoolDistricts() {
-    d3.json("json/ny_school_districts-simplify2.json", function(error, nyb) {
+    d3.json("json/district_merged.json", function(error, nyb) {
         map.attr("id", "schooldistrict")
         .selectAll(".state")
         .data(nyb.features)
         .enter().append("path")
         .attr("class", function(d){ return d.properties.SchoolDist; })
         .attr("d", path)
-        .attr("fill", colorDistrict());
+        .attr("fill", function(d) { return colorDistrict(d.properties.school_gra); } )
 
         plotSchools();
     });
