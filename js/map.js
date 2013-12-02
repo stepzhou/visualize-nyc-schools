@@ -1,6 +1,6 @@
 var width = 960,
-height = 900,
-centered;
+    height = 900,
+    centered;
 
 var svg = d3.select("#map")
     .append("svg")
@@ -8,8 +8,8 @@ var svg = d3.select("#map")
     .attr("height", height);
 
 var projection = d3.geo.mercator()
-    .center([-73.94, 40.673])
-    .scale(80000)
+    .center([-73.94, 40.73])
+    .scale(140000)
     .translate([(width) / 2, (height)/2]);
 
 var path = d3.geo.path()
@@ -19,13 +19,13 @@ var div = d3.select("body").append("div")
     .attr("class", "tooltip")               
     .style("opacity", 0);
 
-var map = svg.append("g");
+var smap = svg.append("g");
 
 plotSchoolDistricts();
 
 d3.select("#mapschool").on("click", function() {
-    map.remove();
-    map = svg.append("g");
+    smap.remove();
+    smap = svg.append("g");
     plotSchoolDistricts();
 });
 
@@ -33,7 +33,7 @@ function color(property) {
   if (property == "LOW" || property == "D" || property == "F")
     { return "#FF2C00"; }
   else if (property == "MED" || property == "B" || property == "C")
-    { return "FFDE00"; }
+    { return "#FFDE00"; }
   else if (property == "HIGH" || property == "A")
     { return "00B945"; }
   else
@@ -48,7 +48,7 @@ function colorDistrict(property) {
   else if (property == "HIGH")
     { return "#34DDDD"; }
   else 
-    return "gray";
+    return "#c0c0c0";
 }
 
 function toTitleCase(str)
@@ -105,7 +105,7 @@ d3.select("#sat").on("click", function() {
 // plot the school districts and school points
 function plotSchoolDistricts() {
     d3.json("json/district_merged.json", function(error, nyb) {
-        map.attr("id", "schooldistrict")
+        smap.attr("id", "schooldistrict")
         .selectAll(".state")
         .data(nyb.features)
         .enter().append("path")
@@ -126,7 +126,7 @@ function plotSchools() {
     d3.json("json/schools_with_info_trim.json", function(error, school) {
         var mouseDuration = 150;
 
-        map.selectAll(".school")
+        smap.selectAll(".school")
         .data(school.features)
         .enter().append("circle")
         .attr("id", "school")
@@ -134,7 +134,7 @@ function plotSchools() {
         .attr("transform", function(d) { return "translate(" + projection(d.geometry.coordinates) + ")"; })
         .attr("r", circle_r)
         .attr("stroke-width", 0)
-        .style("fill", "lime")
+        .style("fill", "blue")
         .style("opacity", 0.90)
         .on("mouseover", function(d) {     
             d3.select(this).transition().duration(mouseDuration).style("opacity", 1);
@@ -163,12 +163,12 @@ function plotSchools() {
 // zoom
 var zoom = d3.behavior.zoom()
     .on("zoom",function() {
-        map.attr("transform","translate("+ 
+        smap.attr("transform","translate("+ 
             d3.event.translate.join(",")+")scale("+d3.event.scale+")");
-        map.selectAll("circle")
+        smap.selectAll("circle")
             .attr("d", path.projection(projection))
             .attr("r", circle_r / d3.event.scale)
-        map.selectAll("path")  
+        smap.selectAll("path")  
             .attr("d", path.projection(projection)); 
 
   });

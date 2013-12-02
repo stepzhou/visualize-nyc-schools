@@ -1,5 +1,10 @@
 @import url(http://fonts.googleapis.com/css?family=PT+Serif|PT+Serif:b|PT+Serif:i|PT+Sans|PT+Sans:b);
 
+#map {
+  width: 960px;
+  height: 500px;
+}
+
 #schooldistrict {
     stroke: white;
     stroke-width: 1px;
@@ -12,7 +17,8 @@ div.tooltip {
     width: auto; 
     height: auto;
     padding: 2px;
-    font: 14px sans-serif; 
+    font-family: "PT Sans", sans-serif;
+    font-size: 12pt;
     color: white;
     background: cornflowerblue;
     border: 1px; 
