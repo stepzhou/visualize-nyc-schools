@@ -8,7 +8,7 @@ var svg = d3.select("#map")
   .attr("height", height);
 
 var projection = d3.geo.mercator()
-  .center([-73.94, 40.70])
+  .center([-73.95, 40.66])
   .scale(75000)
   .translate([(width) / 2, (height)/2]);
 
