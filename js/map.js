@@ -122,7 +122,7 @@ function plotSchoolDistricts() {
 function plotPrecincts() {
 }
 
-var circle_r = 4;
+var circle_r = 5;
 
 function plotSchools() {
     d3.json("json/schools_with_info_trim.json", function(error, school) {
