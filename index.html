@@ -28,6 +28,7 @@
           School</span>
         </button>
         <ul class="dropdown-menu" role="menu">
+          <li id="none"><a title = "Reset" href="javascript:;">None</a></li>
           <li id="cluster"><a title="Schools grouped into three clusters based on a combination of high, medium, or low graduation rates, Regents passigng scores, and SAT scores." href="javascript:;">Cluster</a></li>
           <li id="gradrate"><a title = "The percentage of students enrolled in 4 years of high school who are graduating" href="javascript:;">Graduation Rate</a></li>
           <li id="grade"><a title = "The grade assigned to the school by the Department of Education School Progress Report" href="javascript:;">Grade</a></li>
@@ -36,15 +37,15 @@
         </ul>
       </div>
       <div class="btn-group">
-        <button type="button" id="Environment" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+        <button type="button" id="environment" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
           Environment</span>
         </button>
         <ul class="dropdown-menu" role="menu">
           <li id="mapschool"><a title = "Number of reported graffiti incidents" href="javascript:;">Graffiti</a></li>
-          <li><a title = "Number of reported noise complaints" href="javascript:;">Noise Complaints</a></li>
+          <li id="mapnoise"><a title = "Number of reported noise complaints" href="javascript:;">Noise Complaints</a></li>
         </ul>
       </div>
-      <div id="overlay">Hello</div>
+      <div id="overlay"></div>
       <div id="map"></div>
     </div>
     

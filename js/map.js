@@ -62,26 +62,26 @@ function toTitleCase(str)
 d3.select("#cluster").on("click", function() {
     d3.selectAll("circle")
         .style("fill", function(d) {
-        return color(d.properties.CLUSTER);
-    });
+            return color(d.properties.CLUSTER);
+        });
 
     $('#groupby').html('Cluster');
 });
 
 d3.select("#gradrate").on("click", function() {
     d3.selectAll("circle")
-    .style("fill", function(d) {
-        return color(d.properties.GRADRATE);
-    });
+        .style("fill", function(d) {
+            return color(d.properties.GRADRATE);
+        });
 
     $('#groupby').html('Graduation Rate');
 });
 
 d3.select("#grade").on("click", function() {
     d3.selectAll("circle")
-    .style("fill", function(d) {
-        return color(d.properties.GRADE);
-    });
+        .style("fill", function(d) {
+            return color(d.properties.GRADE);
+        });
 
     $('#groupby').html('Grade');
 });
@@ -104,16 +104,34 @@ d3.select("#sat").on("click", function() {
     $('#groupby').html('SAT Score');
 });
 
+d3.select("#mapschool").on("click", function() {
+    d3.selectAll("path")
+        .attr("fill", function(d) {
+            return colorDistrict(d.properties.school_gra);
+        });
+
+    $('#environment').html('Graffitti');
+});
+
+d3.select("#mapnoise").on("click", function() {
+    d3.selectAll("path")
+        .attr("fill", function(d) {
+            return colorDistrict(d.properties.school_noi);
+        });
+
+    $('#environment').html('Noise Complaints');
+});
+
+
 // plot the school districts and school points
 function plotSchoolDistricts() {
     d3.json("json/district_merged.json", function(error, nyb) {
         smap.attr("id", "schooldistrict")
-        .selectAll(".state")
-        .data(nyb.features)
-        .enter().append("path")
-        .attr("class", function(d){ return d.properties.SchoolDist; })
-        .attr("d", path)
-        .attr("fill", function(d) { return colorDistrict(d.properties.school_gra); } )
+            .selectAll(".state")
+            .data(nyb.features)
+            .enter().append("path")
+            .attr("class", function(d){ return d.properties.SchoolDist; })
+            .attr("d", path);
 
         plotSchools();
     });
@@ -129,36 +147,36 @@ function plotSchools() {
         var mouseDuration = 150;
 
         smap.selectAll(".school")
-        .data(school.features)
-        .enter().append("circle")
-        .attr("id", "school")
-        .attr("class", function(d) { return d.properties.SCHOOLNAME; })
-        .attr("transform", function(d) { return "translate(" + projection(d.geometry.coordinates) + ")"; })
-        .attr("r", circle_r)
-        .attr("stroke-width", 0)
-        .style("fill", "blue")
-        .style("opacity", 0.60)
-        .on("mouseover", function(d) {     
-            d3.select(this).transition().duration(mouseDuration).style("opacity", 1);
-            div.transition().duration(mouseDuration)
-            .style("opacity", 1)
-            .style("left", (d3.event.pageX + 10) + "px")
-            .style("top", (d3.event.pageY -30) + "px")
-            .style("height", "50px");
+            .data(school.features)
+            .enter().append("circle")
+            .attr("id", "school")
+            .attr("class", function(d) { return d.properties.SCHOOLNAME; })
+            .attr("transform", function(d) { return "translate(" + projection(d.geometry.coordinates) + ")"; })
+            .attr("r", circle_r)
+            .attr("stroke-width", 0)
+            .style("fill", "blue")
+            .style("opacity", 0.60)
+            .on("mouseover", function(d) {     
+                d3.select(this).transition().duration(mouseDuration).style("opacity", 1);
+                div.transition().duration(mouseDuration)
+                .style("opacity", 1)
+                .style("left", (d3.event.pageX + 10) + "px")
+                .style("top", (d3.event.pageY -30) + "px")
+                .style("height", "50px");
 
-            var toolText = toTitleCase(d.properties.SCHOOLNAME)
-            if (d.properties.SAT != "<NA>") {
-                toolText += "<br /> The average SAT score is " + d.properties.SAT;
-            }
-            div.html(toolText);
-        })
-        .on("mouseout", function() {
-            d3.select(this)
-            .transition().duration(mouseDuration)
-            .style("opacity", 0.8);
-            div.transition().duration(mouseDuration)
-            .style("opacity", 0);
-        });
+                var toolText = toTitleCase(d.properties.SCHOOLNAME)
+                if (d.properties.SAT != "<NA>") {
+                    toolText += "<br /> The average SAT score is " + d.properties.SAT;
+                }
+                div.html(toolText);
+            })
+            .on("mouseout", function() {
+                d3.select(this)
+                .transition().duration(mouseDuration)
+                .style("opacity", 0.8);
+                div.transition().duration(mouseDuration)
+                .style("opacity", 0);
+            });
     });
 }
 
