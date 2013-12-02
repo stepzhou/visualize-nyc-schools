@@ -2,11 +2,6 @@ var width = 960,
     height = 900,
     centered;
 
-var svg = d3.select("#map")
-    .append("svg")
-    .attr("width", width)
-    .attr("height", height);
-
 var projection = d3.geo.mercator()
     .center([-73.94, 40.73])
     .scale(140000)
@@ -19,6 +14,11 @@ var div = d3.select("body").append("div")
     .attr("class", "tooltip")               
     .style("opacity", 0);
 
+var svg = d3.select("#map")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
 var smap = svg.append("g");
 
 plotSchoolDistricts();
@@ -28,6 +28,8 @@ d3.select("#mapschool").on("click", function() {
     smap = svg.append("g");
     plotSchoolDistricts();
 });
+
+$("#overlay").html("I am the best!");
 
 function color(property) {
   if (property == "LOW" || property == "D" || property == "F")
@@ -135,7 +137,7 @@ function plotSchools() {
         .attr("r", circle_r)
         .attr("stroke-width", 0)
         .style("fill", "blue")
-        .style("opacity", 0.90)
+        .style("opacity", 0.60)
         .on("mouseover", function(d) {     
             d3.select(this).transition().duration(mouseDuration).style("opacity", 1);
             div.transition().duration(mouseDuration)

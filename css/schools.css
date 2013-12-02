@@ -26,14 +26,20 @@ div.tooltip {
     pointer-events: none; 
 } 
 
-button, .dropdown-menu {
+button, .dropdown-menu, #overlay{
   width: 175px;
   font-family: "PT Sans", sans-serif;
+}
+
+.dropdown-menu {
+  z-index: 101;
 }
 
 header,
 footer,
 aside,
+
+
 h1,
 h2,
 h3,
@@ -70,4 +76,14 @@ header aside:after,
 footer aside:after {
   padding-left: .5em;
   content: "||";
+}
+
+#overlay {
+  position: absolute;
+  z-index: 100;
+  padding: 4px 9px;
+  min-width: 180px;
+  max-width: 280px;
+  max-height: 400px;
+  overflow: auto;
 }
