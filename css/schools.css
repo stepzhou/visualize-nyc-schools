@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=PT+Serif|PT+Serif:b|PT+Serif:i|PT+Sans|PT+Sans:b);
+
 #schooldistrict {
     stroke: white;
     stroke-width: 1px;
@@ -10,7 +12,7 @@ div.tooltip {
     width: auto; 
     height: auto;
     padding: 2px;
-    font: 10px sans-serif; 
+    font: 14px sans-serif; 
     color: white;
     background: cornflowerblue;
     border: 1px; 
@@ -18,3 +20,48 @@ div.tooltip {
     pointer-events: none; 
 } 
 
+button, .dropdown-menu {
+  width: 175px;
+  font-family: "PT Sans", sans-serif;
+}
+
+header,
+footer,
+aside,
+h1,
+h2,
+h3,
+h4 {
+    font-family: "PT Sans", sans-serif;
+}
+
+h1 {
+  font-size: 64px;
+  font-weight: 300;
+  letter-spacing: -2px;
+  margin: .3em 0 .1em 0;
+}
+
+header, footer {
+  color: #636363;
+}
+
+body {
+  background: #fcfcfa;
+  color: #333;
+  font-family: "PT Serif", serif;
+  margin: 1em auto 4em auto;
+  position: relative;
+}
+
+header aside,
+footer aside {
+  float: left;
+  margin-right: 1em;
+}
+
+header aside:after,
+footer aside:after {
+  padding-left: .5em;
+  content: "||";
+}
