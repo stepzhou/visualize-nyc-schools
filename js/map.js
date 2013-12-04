@@ -45,7 +45,7 @@ function color(property) {
 function colorDistrict(property) {
   if (property == "LOW") 
     { return "#B0E2FF"; }
-  else if (property == "MED") 
+  else if (property == "MEDIUM") 
     { return "#5CACEE"; }
   else if (property == "HIGH")
     { return "#4A708B"; }
@@ -162,6 +162,7 @@ function plotSchools() {
                 .style("opacity", 1)
                 .style("left", (d3.event.pageX + 10) + "px")
                 .style("top", (d3.event.pageY -30) + "px")
+                .style("fill", "#8DB6CD")
                 .style("height", "50px");
 
                 var toolText = toTitleCase(d.properties.SCHOOLNAME)
