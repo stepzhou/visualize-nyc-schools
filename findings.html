@@ -21,8 +21,12 @@
         <a href="about.html">About Us</a>
       </header>
 
-      <h1>About our project</h1>
-      <p class="lead">Text goes here.</p>
+      <h1>Our findings</h1>
+      <p>The goal of Visualize NYC Schools was to see if certain environmental factors were related to performance of New York City public high schools. We judged the performance of the schools by looking at the metrics of graduation rate, Regents pass rate, average SAT scores, the grade assigned by the <a href = 'http://schools.nyc.gov/Accountability/tools/report/default.htm'>DOE Progress Report</a>, and our own metric, cluster.</p>
+      <h2>What is the cluster metric?</h2>
+      <p>We wanted to find different groupings of schools based on some aggregate measure of graduation rate, Regents pass rate, and SAT scores. We did not use grade because some of these metrics are already used in assessing the grade. The variables used were then scaled and then used as input into a <a href = 'http://en.wikipedia.org/wiki/K-means_clustering'>k-means clustering algorithm</a>. </p>
+      <p>The clustering algorithm was run for k = 1, ...,15. The plot of within cluster sum of squares is below. The bend of the plot occured at k = 3, so 3 clusters were used.</p>
+      <img src = 'resource/kmeansclusters.pdf'>
   </body>
 </html>
 
