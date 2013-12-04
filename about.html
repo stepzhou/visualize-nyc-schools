@@ -30,6 +30,15 @@
       <li><a href = 'https://nycopendata.socrata.com/Education/SAT-Results/f9bf-2cp4?'> SAT Scores </a> </li>
       <li> <a href = 'https://data.cityofnewyork.us/Education/Graduation-Outcomes-Class-Of-2010-Regents-based-Ma/k8hv-56d7'> Graduation Rates and Regents Scores</a></li>
       <li> <a href = 'http://schools.nyc.gov/Accountability/tools/report/default.htm'> School Progress Report </a> </li>
-      <h2>Why was the project started?</h2>
+      <li> <a href = 'https://data.cityofnewyork.us/Social-Services/graffiti/f3qa-vq2v'> Graffiti Reports </a></li>
+      <li> <a href = 'https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2010-to-Present/erm2-nwe9'> Noise Complaints </a></li>
+      <li> <a href = 'https://data.cityofnewyork.us/Education/School-Attendance-and-Enrollment-Statistics-by-Dis/7z8d-msnt'> School Attendence and Enrollment </a></li>
+      <li> <a href = 'https://data.cityofnewyork.us/Social-Services/Percentage-of-People-Residing-in-a-School-District/vbvy-nght'> People Receiving Public Assistance </a></li>
+      <li><a href = 'http://www.nyc.gov/html/dcp/html/bytes/dwndistricts.shtml'>Shape Files for the Maps </a></li>
+      <h2>How was this done?</h2>
+      <p>The visualization for this project was done using <a href = 'http://d3js.org/'>D3.js</a>. The shapefiles from the city were very big (and very laggy!) and were not in the correct format for D3, so we compressed them and converted them using <a href = 'http://www.qgis.org/en/site/'>qgis</a>. For more instructions on how to do this visit our <a href = 'https://github.com/stepzhou/visualize-nyc-schools/tree/master/js'> github </a></p>
+      <p>The colors of the data points for the schools and the colors for the districts were determined by the 66th and 33rd percentiles. The color information was merged with a json file with the coordinates of the points or the outline of the shapes.</p>
+      <h2>Why was this done?</h2>
+      <p>This is a final project for <a href = 'http://columbiadatascience.com/'>Intro to Data Science</a> at Columbia University. The project members are George Tsai, Hannah Keiler, Jeremy Meyers, and Stephen Zhou. We were excited by the amount of data available on the New York Open Data website and wanted to do a project that used many of these data sets to provide insight one couldn't gather from the individual data sets alone. We are all students, so education is near and dear to our hearts. </p>
   </body>
 </html>
