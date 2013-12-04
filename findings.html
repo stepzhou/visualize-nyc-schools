@@ -27,6 +27,12 @@
       <p>We wanted to find different groupings of schools based on some aggregate measure of graduation rate, Regents pass rate, and SAT scores. We did not use grade because some of these metrics are already used in assessing the grade. The variables used were then scaled and then used as input into a <a href = 'http://en.wikipedia.org/wiki/K-means_clustering'>k-means clustering algorithm</a>. </p>
       <p>The clustering algorithm was run for k = 1, ...,15. The plot of within cluster sum of squares is below. The bend of the plot occured at k = 3, so 3 clusters were used.</p>
       <img src = 'resource/kmeans.png'>
+      <p>The three cluster centers wound up corresponding to all relatively high, all relatively low, and medium values of graduation rate, Regents pass rate, and SAT scores.</p>
+      <h2>School and Environment<h2>
+      <p>The strongest relationship found was the relationship between performance and per-district attendence rate. The correlation between attendence and graduation rate was .589, between attendence and Regents pass rate was .593, and between attendence and SAT scores was .621. This suggests that it may be best to send a student to a school in a district with a "culture" of attendence. In schools in districts with low attendence rates, teachers have to spend time reviewing for students who missed class. For more info about the problem of absences in schools visit <a href= http://www.attendanceworks.org/>Attendence Works</a>.</p>
+       <p>The weakest relationship was the relationship between reported graffiti incidents in a district and the performance metrics. The correlation between graffiti incidents reported in a district and graduation rate was .05, for graffiti and Regents pass rate was .09, and for graffiti and SAT scores was .145. Initially, we thought that schools in a nicer, cleaner, environment might relate to better student performance because there are fewer distractions with respect to graffiti writing and general cleanliness in the neighborhoods of their school. However, students in NYC are probably accustomed to graffiti, so that may explain the weak relationship.</p>
+        <p>For more insights into the relationship between school performance and environment, <a href = 'index.html'>explore our tool</a>!</p>
+      <h2>School and Location</h2>
   </body>
 </html>
 
