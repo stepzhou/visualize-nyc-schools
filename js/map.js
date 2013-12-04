@@ -44,11 +44,11 @@ function color(property) {
 
 function colorDistrict(property) {
   if (property == "LOW") 
-    { return "#BCFFFF"; }
+    { return "#B0E2FF"; }
   else if (property == "MED") 
-    { return "#7AF5F5"; }
+    { return "#5CACEE"; }
   else if (property == "HIGH")
-    { return "#34DDDD"; }
+    { return "#4A708B"; }
   else 
     return "#c0c0c0";
 }
