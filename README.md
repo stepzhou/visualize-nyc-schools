@@ -14,23 +14,42 @@ Summary
 
 We are exploring and visualizing the relationship between the local New York
 City environment and school performance using public data sets from nyc.gov and
-NYC Open Data.
+NYC Open Data for our Fall 2013 Intro to Data Science course project.
 
 Folder Hierarchy
 ----------------
 
-    css/    custom css
-    js/     custom js
-    json/   json resource files
-    lib/    third-party sources
-        bootstrap/
-        d3/
-        jquery/
-    scripts/
-    index.html 
+    .
+    ├── css             Our custom css
+    ├── js              Our custom js
+    ├── json            Our JSON files
+    ├── lib             Third-party libraries
+    │   ├── bootstrap
+    │   ├── d3
+    │   ├── jquery
+    ├── resource        Some HTML display messages
+    ├── scripts         Our scripts
+    │   └── school_info_join
+    ├── about.html      About page
+    ├── findings.html   Findings summary page
+    ├── index.html      Main map page
+    └── README.md       This file
+
+
+Dependencies and Tools
+----------------------
+
+*   Bootstrap - HTML and CSS templates
+*   D3.js -  a Javascript library that aids in the creation and control of
+    interactive graphics on the web
+*   Githu - collaboration and version control
+*   Quantum GIS (QGIS) - an open source geographic information systems (GIS)
+    application
 
 Instructions
 ------------
+
+Usage instructions as well as group documentation of data processing methods.
 
 ### Usage
 
@@ -51,9 +70,9 @@ whooping 3.8 MB.
 
 To make the size more manageable so interactive components like pan and zoom
 aren't laggy, we should first simplify the maps. This can be done easily using
-qgis.
+QGIS.
 
-1.  Open qgis and add the Shapefile vector
+1.  Open QGIS and add the Shapefile vector
 2.  Vector > Geometry Tools > Simplify geometries
 3.  Select input features, set the Save as to another directory, pick a
     tolerance level
@@ -63,20 +82,39 @@ qgis.
 
 ### Convert Shapefiles to GeoJSON
 
-NYC releases several maps as shapefiles on their website
-(http://www.nyc.gov/html/dcp/html/bytes/dwndistricts.shtml).
-
-However, the shapefiles encode the location coordinates using the Universal
-Transverse Mercator (UTM) coordinate system, which D3 geo does not support.
+The shapefiles encode the location coordinates using the Universal Transverse
+Mercator (UTM) coordinate system, which D3 geo does not support.
 
 In order to map on D3, we must convert the shapefiles into GeoJSON format and
 the UTM coordinates into lat/long (either NAD83 or WGS72).
 
-1.  Open the shp file in qgis
+1.  Open the shp file in QGIS
 2.  Layer > Save As
     *   Format: GeoJSON
     *   CRS: either NAD83 or WGS 72 
 3.  Specify a file name
 4.  Save
 
+### Merge GeoJSON Files with Statistics
 
+GeoJSON files can be merged with data in two ways.
+
+#### Python Script
+
+Write a quick script using the json and csv Python libraries. Basically, just
+read the GeoJSON file in, convert it to a JSON object, and then add the new
+dataset in the appropriate place within the JSON data structure.
+
+See scripts/school\_info\_join for an example.
+
+#### QGIS
+
+George, fill out.
+
+Attribution
+-----------
+
+*   [NYC Open Data](https://nycopendata.socrata.com/) for data sets
+*   [NYC.gov](http://www1.nyc.gov/) for data sets and NYC shapefiles
+*   [Mike Bostock](http://bl.ocks.org/mbostock) for D3 examples and some
+    borrowed CSS templating
