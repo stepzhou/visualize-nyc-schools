@@ -109,7 +109,11 @@ See scripts/school\_info\_join for an example.
 
 #### QGIS
 
-George, fill out.
+1. Layer > Add vector layer csv and/or json files
+2. Layer > properties > Joins
+3. Add vector join
+4. Layer > attribute table to check joins
+5. Save as GeoJSON with CRS NAD83
 
 Attribution
 -----------
