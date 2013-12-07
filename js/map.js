@@ -186,7 +186,7 @@ function plotPrecincts() {
 var circle_r = 5;
 
 function plotSchools() {
-    d3.json("json/schools_with_info_trim.json", function(error, school) {
+    d3.json("json/schools_trim_merged.json", function(error, school) {
         var mouseDuration = 150;
 
         smap.selectAll(".school")
@@ -206,14 +206,17 @@ function plotSchools() {
                 .style("left", (d3.event.pageX + 10) + "px")
                 .style("top", (d3.event.pageY -30) + "px")
                 .style("fill", "#8DB6CD")
-                .style("height", "75px");
+                .style("height", "90px");
 
                 var toolText = toTitleCase(d.properties.SCHOOLNAME)
-                if (d.properties.SAT != "<NA>") {
-                    toolText += "<br /> The average SAT score is " + d.properties.SAT;
+                if (d.properties.SAT_RAW != "<NA>" && d.properties.SAT_RAW != "null" && d.properties.SAT_RAW != "NaN") {
+                    toolText += "<br /> The average SAT score is " + d.properties.SAT_RAW; 
                 }
-                if (d.properties.GRADE != "<NA>") {
+                if (d.properties.GRADE != "<NA>" && d.properties.GRADE != "null" && d.properties.GRADE != "NaN") {
                     toolText += "<br /> Progress Report Grade is " + d.properties.GRADE;
+                }
+                if (d.properties.GRAD_RAW != "<NA>" && d.properties.GRAD_RAW != "null" && d.properties.GRAD_RAW != "NaN") {
+                    toolText += "<br /> The graduation rate is " + Math.round(d.properties.GRAD_RAW * 100) + "%";
                 }
 
 
