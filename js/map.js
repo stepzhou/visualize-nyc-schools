@@ -63,7 +63,7 @@ d3.select("#none").on("click", function() {
     d3.selectAll("circle")
         .style("fill", "blue");
 
-    $('#groupby').html('None');
+    $('#groupby').html('School');
 });
 
 d3.select("#cluster").on("click", function() {
@@ -109,6 +109,13 @@ d3.select("#sat").on("click", function() {
     });
 
     $('#groupby').html('SAT Score');
+});
+
+d3.select("#mapnone").on("click", function() {
+    d3.selectAll("path")
+        .attr("fill", "#c0c0c0");
+
+    $('#environment').html('Environment');
 });
 
 d3.select("#mapgraffiti").on("click", function() {
