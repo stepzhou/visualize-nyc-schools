@@ -59,6 +59,13 @@ function toTitleCase(str)
 }
 
 // group by dropdown handling
+d3.select("#none").on("click", function() {
+    d3.selectAll("circle")
+        .style("fill", "blue");
+
+    $('#groupby').html('None');
+});
+
 d3.select("#cluster").on("click", function() {
     d3.selectAll("circle")
         .style("fill", function(d) {
