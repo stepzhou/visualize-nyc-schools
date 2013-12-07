@@ -45,7 +45,7 @@ function color(property) {
 function colorDistrict(property) {
   if (property == "LOW") 
     { return "#B0E2FF"; }
-  else if (property == "MEDIUM") 
+  else if (property == "MEDIUM" || property == "MED") 
     { return "#5CACEE"; }
   else if (property == "HIGH")
     { return "#4A708B"; }
@@ -104,10 +104,10 @@ d3.select("#sat").on("click", function() {
     $('#groupby').html('SAT Score');
 });
 
-d3.select("#mapschool").on("click", function() {
+d3.select("#mapgraffiti").on("click", function() {
     d3.selectAll("path")
         .attr("fill", function(d) {
-            return colorDistrict(d.properties.school_gra);
+            return colorDistrict(d.properties.graffiti);
         });
 
     $('#environment').html('Graffitti');
@@ -116,16 +116,45 @@ d3.select("#mapschool").on("click", function() {
 d3.select("#mapnoise").on("click", function() {
     d3.selectAll("path")
         .attr("fill", function(d) {
-            return colorDistrict(d.properties.school_noi);
+            return colorDistrict(d.properties.noise);
         });
 
     $('#environment').html('Noise Complaints');
 });
 
 
+d3.select("#mapassistance").on("click", function() {
+    d3.selectAll("path")
+        .attr("fill", function(d) {
+            return colorDistrict(d.properties.assistance);
+        });
+
+    $('#environment').html('Public Assistance');
+});
+
+d3.select("#mapattendance").on("click", function() {
+    d3.selectAll("path")
+        .attr("fill", function(d) {
+            return colorDistrict(d.properties.attendance);
+        });
+
+    $('#environment').html('School Attendance');
+});
+
+d3.select("#mapenrollment").on("click", function() {
+    d3.selectAll("path")
+        .attr("fill", function(d) {
+            return colorDistrict(d.properties.enrollment);
+        });
+
+    $('#environment').html('School Enrollment');
+});
+
+
+
 // plot the school districts and school points
 function plotSchoolDistricts() {
-    d3.json("json/district_merged.json", function(error, nyb) {
+    d3.json("json/districts_merged.json", function(error, nyb) {
         smap.attr("id", "schooldistrict")
             .selectAll(".state")
             .data(nyb.features)
@@ -163,12 +192,17 @@ function plotSchools() {
                 .style("left", (d3.event.pageX + 10) + "px")
                 .style("top", (d3.event.pageY -30) + "px")
                 .style("fill", "#8DB6CD")
-                .style("height", "50px");
+                .style("height", "75px");
 
                 var toolText = toTitleCase(d.properties.SCHOOLNAME)
                 if (d.properties.SAT != "<NA>") {
                     toolText += "<br /> The average SAT score is " + d.properties.SAT;
                 }
+                if (d.properties.GRADE != "<NA>") {
+                    toolText += "<br /> Progress Report Grade is " + d.properties.GRADE;
+                }
+
+
                 div.html(toolText);
             })
             .on("mouseout", function() {
