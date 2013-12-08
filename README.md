@@ -55,7 +55,7 @@ Usage instructions as well as group documentation of data processing methods.
 
 Start a HTTP server in the directory. I recommend Python's SimpleHTTPServer.
 
-    $ pythom -m SimpleHTTPServer 8080
+    $ python -m SimpleHTTPServer 8080
 
 Then, go to localhost:8080 on your browser.
 
