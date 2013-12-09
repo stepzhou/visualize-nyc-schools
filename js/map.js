@@ -165,8 +165,10 @@ d3.select("#sat").on("click", function() {
 });
 
 function colorSchools(name, key) {
-    d3.selectAll("circle")
-    .style("fill", function(d) {
+    removeLegend('schLegend');
+
+    d3.selectAll("#school")
+        .style("fill", function(d) {
         return color(d.properties[key]);
     });
 
@@ -177,10 +179,11 @@ function colorSchools(name, key) {
 
 // environment factors
 d3.select("#mapnone").on("click", function() {
+    removeLegend("envLegend");
+
     d3.selectAll("path")
         .attr("fill", "#c0c0c0");
 
-    removeLegend("envLegend");
     $('#environment').text('Environment');
     displayInfo();
 });
