@@ -161,7 +161,7 @@ d3.select("#regents").on("click", function() {
 });
 
 d3.select("#sat").on("click", function() {
-    colorSchools('SAT Score', 'SAT');
+    colorSchools('SAT Scores', 'SAT');
 });
 
 function colorSchools(name, key) {
