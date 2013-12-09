@@ -49,8 +49,66 @@ d3.select("#mapschool").on("click", function() {
     plotSchoolDistricts();
 });
 
-$("#overlay").html("I am the best!");
-console.log(d3.csv.parse('resource/messages.csv'));
+var messageMap = {};
+d3.csv('resource/messages.csv', function(rows) {
+    rows.forEach(function(value, index) {
+        var environment = value.Environment;
+        if (messageMap[value.School]) {
+            messageMap[value.School][environment] = value.Message;
+        }
+        else {
+            messageMap[value.School] = { environment: value.Message };
+        }
+    });
+    console.log(messageMap);
+});
+
+function displayInfo() {
+    var school = schoolToKey();
+    var environment = envToKey();
+    console.log(school);
+    console.log(environment);
+
+    if (messageMap[school] && messageMap[school][environment])
+        $("#overlay").html(messageMap[school][environment]);
+    else
+        $("#overlay").html('Try some combinations!');
+}
+
+// Converting actual category names to their corresponding key names
+function schoolToKey() {
+    var schoolName = $("#groupby").text().trim();
+    console.log(schoolName);
+    if (schoolName == "Cluster")
+        return "cluster";
+    if (schoolName == "Graduation Rate")
+        return "gradrate";
+    if (schoolName == "Grade")
+        return "grade";
+    if (schoolName == "Regent Score")
+        return "regents";
+    if (schoolName == "SAT Scores")
+        return "sat";
+    return "";
+}
+
+function envToKey() {
+    var environmentName = $("#environment").text().trim();
+    console.log(environmentName);
+    if (environmentName == "Graffiti")
+        return "graffiti";
+    if (environmentName == "Noise Complaints")
+        return "noise";
+    if (environmentName == "Public Assistance")
+        return "assistance";
+    if (environmentName == "School Attendance")
+        return "attendance";
+    if (environmentName == "School Enrollment")
+        return "enrollment";
+    return "";
+}
+
+displayInfo();
 
 function color(property) {
   if (property == "LOW" || property == "D" || property == "F")
@@ -116,6 +174,7 @@ function colorSchools(name, key) {
 
     showLegend("schLegend", 20);
     $('#groupby').html(name);
+    displayInfo();
 }
 
 // environment factors
@@ -154,10 +213,9 @@ function colorEnvironment(name, key) {
         });
 
     showLegend("envLegend", 160);
-    $('#' + key).html(event.name);
+    $('#environment').html(name);
+    displayInfo();
 }
-
-
 
 // plot the school districts and school points
 function plotSchoolDistricts() {
@@ -242,7 +300,7 @@ svg.call(zoom)
 
 // envLegend
 function showLegend(className, xOffset) {
-    var yOffset = 130;
+    var yOffset = 175;
     if (className == "envLegend") {
         var data = envLegendData;
         var title = "Environment";
