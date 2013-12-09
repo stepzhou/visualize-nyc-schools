@@ -2,6 +2,26 @@ var width = 960,
     height = 900,
     centered;
 
+var envLow = "#B0E2FF",
+    envMed = "#5CACEE",
+    envHigh = "#4A708B",
+    envNa = "#c0c0c0";
+
+var envLegendData = [{ "label": "Low", "color": envLow },
+                     { "label": "Medium", "color": envMed },
+                     { "label": "High", "color": envHigh },
+                     { "label": "N/A", "color": envNa }];
+
+var schLow = "#FF2C00",
+    schMed = "#FFDE00",
+    schHigh = "00B945",
+    schNa = "gray";
+
+var schLegendData = [{ "label": "Low", "color": schLow },
+                     { "label": "Medium", "color": schMed },
+                     { "label": "High", "color": schHigh },
+                     { "label": "N/A", "color": schNa }];
+
 var projection = d3.geo.mercator()
     .center([-73.94, 40.73])
     .scale(140000)
@@ -21,6 +41,16 @@ var svg = d3.select("#map")
 
 var smap = svg.append("g");
 
+var envLegend = svg.selectAll("g.envLegend")
+    .data(envLegendData)
+    .enter().append("g")
+    .attr("class", "envLegend");
+
+var schLegend = svg.selectAll("g.schLegend")
+    .data(schLegendData)
+    .enter().append("g")
+    .attr("clas", "schLegend");
+
 plotSchoolDistricts();
 
 d3.select("#mapschool").on("click", function() {
@@ -33,24 +63,24 @@ $("#overlay").html("I am the best!");
 
 function color(property) {
   if (property == "LOW" || property == "D" || property == "F")
-    { return "#FF2C00"; }
+    { return schLow; }
   else if (property == "MED" || property == "B" || property == "C")
-    { return "#FFDE00"; }
+    { return schMed; }
   else if (property == "HIGH" || property == "A")
-    { return "00B945"; }
+    { return schHigh; }
   else
-    return "gray";
+    return schNa;
 }
 
 function colorDistrict(property) {
   if (property == "LOW") 
-    { return "#B0E2FF"; }
+    { return envLow; }
   else if (property == "MEDIUM" || property == "MED") 
-    { return "#5CACEE"; }
+    { return envMed; }
   else if (property == "HIGH")
-    { return "#4A708B"; }
+    { return envHigh; }
   else 
-    return "#c0c0c0";
+    return envNa;
 }
 
 function toTitleCase(str)
@@ -63,106 +93,78 @@ d3.select("#none").on("click", function() {
     d3.selectAll("circle")
         .style("fill", "blue");
 
+    removeLegend("schLegend");
     $('#groupby').html('School');
 });
 
 d3.select("#cluster").on("click", function() {
-    d3.selectAll("circle")
-        .style("fill", function(d) {
-            return color(d.properties.CLUSTER);
-        });
-
-    $('#groupby').html('Cluster');
+    colorSchools('Cluster', 'CLUSTER');
 });
 
 d3.select("#gradrate").on("click", function() {
-    d3.selectAll("circle")
-        .style("fill", function(d) {
-            return color(d.properties.GRADRATE);
-        });
-
-    $('#groupby').html('Graduation Rate');
+    colorSchools('Graduation Rate', 'GRADRATE');
 });
 
 d3.select("#grade").on("click", function() {
-    d3.selectAll("circle")
-        .style("fill", function(d) {
-            return color(d.properties.GRADE);
-        });
-
-    $('#groupby').html('Grade');
+    colorSchools('Grade', 'GRADE');
 });
 
 d3.select("#regents").on("click", function() {
-    d3.selectAll("circle")
-    .style("fill", function(d) {
-        return color(d.properties.REGENTS);
-    });
-
-    $('#groupby').html('Regent Score');
+    colorSchools('Regent Score', 'REGENTS');
 });
 
 d3.select("#sat").on("click", function() {
-    d3.selectAll("circle")
-    .style("fill", function(d) {
-        return color(d.properties.SAT);
-    });
-
-    $('#groupby').html('SAT Score');
+    colorSchools('SAT Score', 'SAT');
 });
 
+function colorSchools(name, key) {
+    d3.selectAll("circle")
+    .style("fill", function(d) {
+        return color(d.properties[key]);
+    });
+
+    showLegend("schLegend", 20);
+    $('#groupby').html(name);
+}
+
+// environment factors
 d3.select("#mapnone").on("click", function() {
     d3.selectAll("path")
         .attr("fill", "#c0c0c0");
 
+    removeLegend("envLegend");
     $('#environment').html('Environment');
 });
 
 d3.select("#mapgraffiti").on("click", function() {
-    d3.selectAll("path")
-        .attr("fill", function(d) {
-            return colorDistrict(d.properties.graffiti);
-        });
-
-    $('#environment').html('Graffitti');
+    colorEnvironment('Graffiti', 'graffiti');
 });
 
 d3.select("#mapnoise").on("click", function() {
-    d3.selectAll("path")
-        .attr("fill", function(d) {
-            return colorDistrict(d.properties.noise);
-        });
-
-    $('#environment').html('Noise Complaints');
+    colorEnvironment('Noise Complaints', 'noise');
 });
 
-
 d3.select("#mapassistance").on("click", function() {
-    d3.selectAll("path")
-        .attr("fill", function(d) {
-            return colorDistrict(d.properties.assistance);
-        });
-
-    $('#environment').html('Public Assistance');
+    colorEnvironment('Public Assistance', 'assistance');
 });
 
 d3.select("#mapattendance").on("click", function() {
-    d3.selectAll("path")
-        .attr("fill", function(d) {
-            return colorDistrict(d.properties.attendance);
-        });
-
-    $('#environment').html('School Attendance');
+    colorEnvironment('School Attendance', 'attendance');
 });
 
 d3.select("#mapenrollment").on("click", function() {
+    colorEnvironment('School Enrollment', 'enrollment');
+});
+
+function colorEnvironment(name, key) {
     d3.selectAll("path")
         .attr("fill", function(d) {
-            return colorDistrict(d.properties.enrollment);
+            return colorDistrict(d.properties[key]);
         });
 
-    $('#environment').html('School Enrollment');
-});
+    showLegend("envLegend", 160);
+    $('#' + key).html(event.name);
+}
 
 
 
@@ -246,3 +248,32 @@ var zoom = d3.behavior.zoom()
   });
 
 svg.call(zoom)
+
+// envLegend
+function showLegend(className, xOffset) {
+    if (className == "envLegend")
+        var data = envLegendData;
+    else
+        var data = schLegendData;
+    d3.selectAll("g." + className).remove();
+    var envLegend = svg.selectAll("g." + className)
+        .data(data)
+        .enter().append("g")
+        .attr("class", className);
+    envLegend.append("rect")
+        .attr("x", xOffset)
+        .attr("y", function(d, i) { return i * 18 + 200; })
+        .attr("width", 60)
+        .attr("height", 18)
+        .style("fill", function(d) { return d.color; });
+
+    envLegend.append("text")
+        .attr("x", xOffset + 66)
+        .attr("y", function(d, i) { return i * 18 + 195; })
+        .attr("dy", "18px")
+        .text(function(d) { return d.label; });
+}
+
+function removeLegend(className) {
+    d3.selectAll("g." + className).remove();
+}
