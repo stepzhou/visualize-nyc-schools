@@ -211,7 +211,7 @@ function colorEnvironment(name, key) {
             return colorDistrict(d.properties[key]);
         });
 
-    showLegend("envLegend", 160);
+    showLegend("envLegend", 130);
     $('#environment').text(name);
     displayInfo();
 }
@@ -303,10 +303,12 @@ function showLegend(className, xOffset) {
     if (className == "envLegend") {
         var data = envLegendData;
         var title = "Environment";
+        var textOffset = 66;
     }
     else {
         var data = schLegendData;
         var title = "School";
+        var textOffset = 30;
     }
 
     d3.selectAll("g." + className).remove();
@@ -322,15 +324,24 @@ function showLegend(className, xOffset) {
         .attr("font-size", "16pt")
         .text(title);
 
-    legend.append("rect")
-        .attr("x", xOffset)
-        .attr("y", function(d, i) { return i * 18 + yOffset + 10; })
-        .attr("width", 60)
-        .attr("height", 18)
-        .style("fill", function(d) { return d.color; });
+    if (className == "envLegend") {
+        legend.append("rect")
+            .attr("x", xOffset)
+            .attr("y", function(d, i) { return i * 18 + yOffset + 10; })
+            .attr("width", 60)
+            .attr("height", 18)
+            .style("fill", function(d) { return d.color; });
+    }
+    else {
+        legend.append("circle")
+            .attr("cx", xOffset + 10)
+            .attr("cy", function(d, i) { return i * 18 + yOffset + 18; })
+            .attr("r", 5)
+            .style("fill", function(d) { return d.color; });
+    }
 
     legend.append("text")
-        .attr("x", xOffset + 66)
+        .attr("x", xOffset + textOffset)
         .attr("y", function(d, i) { return i * 18 + yOffset + 10; })
         .attr("dy", "14px")
         .text(function(d) { return d.label; });
