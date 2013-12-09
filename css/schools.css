@@ -87,3 +87,7 @@ footer aside:after {
   max-height: 400px;
   overflow: auto;
 }
+
+.caret {
+  margin-top:8px;
+}

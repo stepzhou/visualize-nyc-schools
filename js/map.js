@@ -7,20 +7,24 @@ var envLow = "#B0E2FF",
     envHigh = "#4A708B",
     envNa = "#c0c0c0";
 
-var envLegendData = [{ "label": "Low", "color": envLow },
-                     { "label": "Medium", "color": envMed },
+var envLegendData = [
                      { "label": "High", "color": envHigh },
-                     { "label": "N/A", "color": envNa }];
+                     { "label": "Medium", "color": envMed },
+                     { "label": "Low", "color": envLow },
+                     { "label": "N/A", "color": envNa }
+                    ];
 
 var schLow = "#FF2C00",
     schMed = "#FFDE00",
     schHigh = "00B945",
     schNa = "gray";
 
-var schLegendData = [{ "label": "Low", "color": schLow },
-                     { "label": "Medium", "color": schMed },
+var schLegendData = [
                      { "label": "High", "color": schHigh },
-                     { "label": "N/A", "color": schNa }];
+                     { "label": "Medium", "color": schMed },
+                     { "label": "Low", "color": schLow },
+                     { "label": "N/A", "color": schNa }
+                    ];
 
 var projection = d3.geo.mercator()
     .center([-73.94, 40.73])
@@ -43,6 +47,7 @@ var smap = svg.append("g");
 
 plotSchoolDistricts();
 
+
 d3.select("#mapschool").on("click", function() {
     smap.remove();
     smap = svg.append("g");
@@ -53,21 +58,17 @@ var messageMap = {};
 d3.csv('resource/messages.csv', function(rows) {
     rows.forEach(function(value, index) {
         var environment = value.Environment;
-        if (messageMap[value.School]) {
-            messageMap[value.School][environment] = value.Message;
+        if (!messageMap[value.School]) {
+            messageMap[value.School] = {};
         }
-        else {
-            messageMap[value.School] = { environment: value.Message };
-        }
+        messageMap[value.School][environment] = value.Message;
     });
-    console.log(messageMap);
+    displayInfo();
 });
 
 function displayInfo() {
-    var school = schoolToKey();
-    var environment = envToKey();
-    console.log(school);
-    console.log(environment);
+    var school = schoolToKey().trim();
+    var environment = envToKey().trim();
 
     if (messageMap[school] && messageMap[school][environment])
         $("#overlay").html(messageMap[school][environment]);
@@ -78,7 +79,6 @@ function displayInfo() {
 // Converting actual category names to their corresponding key names
 function schoolToKey() {
     var schoolName = $("#groupby").text().trim();
-    console.log(schoolName);
     if (schoolName == "Cluster")
         return "cluster";
     if (schoolName == "Graduation Rate")
@@ -94,7 +94,6 @@ function schoolToKey() {
 
 function envToKey() {
     var environmentName = $("#environment").text().trim();
-    console.log(environmentName);
     if (environmentName == "Graffiti")
         return "graffiti";
     if (environmentName == "Noise Complaints")
@@ -102,13 +101,11 @@ function envToKey() {
     if (environmentName == "Public Assistance")
         return "assistance";
     if (environmentName == "School Attendance")
-        return "attendance";
+        return "attendence";
     if (environmentName == "School Enrollment")
         return "enrollment";
     return "";
 }
-
-displayInfo();
 
 function color(property) {
   if (property == "LOW" || property == "D" || property == "F")
@@ -143,7 +140,8 @@ d3.select("#none").on("click", function() {
         .style("fill", "blue");
 
     removeLegend("schLegend");
-    $('#groupby').html('School');
+    $('#groupby').text('School');
+    displayInfo();
 });
 
 d3.select("#cluster").on("click", function() {
@@ -173,7 +171,7 @@ function colorSchools(name, key) {
     });
 
     showLegend("schLegend", 20);
-    $('#groupby').html(name);
+    $('#groupby').text(name);
     displayInfo();
 }
 
@@ -183,7 +181,8 @@ d3.select("#mapnone").on("click", function() {
         .attr("fill", "#c0c0c0");
 
     removeLegend("envLegend");
-    $('#environment').html('Environment');
+    $('#environment').text('Environment');
+    displayInfo();
 });
 
 d3.select("#mapgraffiti").on("click", function() {
@@ -213,7 +212,7 @@ function colorEnvironment(name, key) {
         });
 
     showLegend("envLegend", 160);
-    $('#environment').html(name);
+    $('#environment').text(name);
     displayInfo();
 }
 
