@@ -41,16 +41,6 @@ var svg = d3.select("#map")
 
 var smap = svg.append("g");
 
-var envLegend = svg.selectAll("g.envLegend")
-    .data(envLegendData)
-    .enter().append("g")
-    .attr("class", "envLegend");
-
-var schLegend = svg.selectAll("g.schLegend")
-    .data(schLegendData)
-    .enter().append("g")
-    .attr("clas", "schLegend");
-
 plotSchoolDistricts();
 
 d3.select("#mapschool").on("click", function() {
@@ -60,6 +50,7 @@ d3.select("#mapschool").on("click", function() {
 });
 
 $("#overlay").html("I am the best!");
+console.log(d3.csv.parse('resource/messages.csv'));
 
 function color(property) {
   if (property == "LOW" || property == "D" || property == "F")
@@ -251,26 +242,40 @@ svg.call(zoom)
 
 // envLegend
 function showLegend(className, xOffset) {
-    if (className == "envLegend")
+    var yOffset = 130;
+    if (className == "envLegend") {
         var data = envLegendData;
-    else
+        var title = "Environment";
+    }
+    else {
         var data = schLegendData;
+        var title = "School";
+    }
+
     d3.selectAll("g." + className).remove();
-    var envLegend = svg.selectAll("g." + className)
+
+    var legend = svg.selectAll("g." + className)
         .data(data)
         .enter().append("g")
         .attr("class", className);
-    envLegend.append("rect")
+
+    legend.append("text")
         .attr("x", xOffset)
-        .attr("y", function(d, i) { return i * 18 + 200; })
+        .attr("y", yOffset)
+        .attr("font-size", "16pt")
+        .text(title);
+
+    legend.append("rect")
+        .attr("x", xOffset)
+        .attr("y", function(d, i) { return i * 18 + yOffset + 10; })
         .attr("width", 60)
         .attr("height", 18)
         .style("fill", function(d) { return d.color; });
 
-    envLegend.append("text")
+    legend.append("text")
         .attr("x", xOffset + 66)
-        .attr("y", function(d, i) { return i * 18 + 195; })
-        .attr("dy", "18px")
+        .attr("y", function(d, i) { return i * 18 + yOffset + 10; })
+        .attr("dy", "14px")
         .text(function(d) { return d.label; });
 }
 
