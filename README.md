@@ -116,7 +116,7 @@ See scripts/school\_info\_join for an example.
 4. Layer > attribute table to check joins
 5. Save as GeoJSON with CRS NAD83
 
-#### Statistical Analysis Code
+### Statistical Analysis Code
 - backgroundcode.R : the code for the graphs used in the midterm report
 - popuptextstats.R : the code for the correlation between the district variables and the school metrics and the ANOVA tests for significant district variables
 - schoolclustercode.R : code for doing the k-means clustering to determine the school cluster
