@@ -1,6 +1,8 @@
 Visualize New York City Schools
 ===============================
 
+![Screen shot](img/example_ss.png)
+
 Members
 -------
 
@@ -46,7 +48,7 @@ Dependencies and Tools
 *   Quantum GIS (QGIS) - an open source geographic information systems (GIS)
     application
 *   R for statistical analysis
-*   
+   
 Instructions
 ------------
 
@@ -117,10 +119,10 @@ See scripts/school\_info\_join for an example.
 5. Save as GeoJSON with CRS NAD83
 
 ### Statistical Analysis Code
-- backgroundcode.R : the code for the graphs used in the midterm report
-- popuptextstats.R : the code for the correlation between the district variables and the school metrics and the ANOVA tests for significant district variables
-- schoolclustercode.R : code for doing the k-means clustering to determine the school cluster
-- websitemerging.R : merges the school information for the dataset to be used on the website
+*   backgroundcode.R : the code for the graphs used in the midterm report
+*   popuptextstats.R : the code for the correlation between the district variables and the school metrics and the ANOVA tests for significant district variables
+*   schoolclustercode.R : code for doing the k-means clustering to determine the school cluster
+*   websitemerging.R : merges the school information for the dataset to be used on the website
 
 Attribution
 -----------
