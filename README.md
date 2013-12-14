@@ -1,7 +1,7 @@
 Visualize New York City Schools
 ===============================
 
-![Screen shot](img/example_ss.png)
+![Screen shot](img/map_cropped.png)
 
 Members
 -------
