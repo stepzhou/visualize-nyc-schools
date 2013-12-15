@@ -120,6 +120,7 @@ See scripts/school\_info\_join for an example.
 
 ### Statistical Analysis Code
 *   backgroundcode.R : the code for the graphs used in the midterm report
+*   cluster\_ANOVA.xls : analysis for the ANOVA on the cluster metric across all 32 districts
 *   popuptextstats.R : the code for the correlation between the district variables and the school metrics and the ANOVA tests for significant district variables
 *   schoolclustercode.R : code for doing the k-means clustering to determine the school cluster
 *   websitemerging.R : merges the school information for the dataset to be used on the website
