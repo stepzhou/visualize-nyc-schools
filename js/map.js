@@ -1,7 +1,18 @@
+/**
+ * Visualize NYC schools D3 map.
+ * Authors: Hannah Keiler, Jeremy Myers, George Tsai, Stephen Zhou
+ */
+
+/**
+ * Basic map properties
+ */
 var width = 960,
     height = 900,
     centered;
 
+/**
+ * District and school legend color mappings
+ */
 var envLow = "#B0E2FF",
     envMed = "#5CACEE",
     envHigh = "#4A708B",
@@ -26,6 +37,9 @@ var schLegendData = [
                      { "label": "N/A", "color": schNa }
                     ];
 
+/**
+ * Make map SVGs
+ */
 var projection = d3.geo.mercator()
     .center([-73.94, 40.73])
     .scale(140000)
@@ -47,12 +61,9 @@ var smap = svg.append("g");
 
 plotSchoolDistricts();
 
-
-d3.select("#mapschool").on("click", function() {
-    smap.remove();
-    smap = svg.append("g");
-    plotSchoolDistricts();
-});
+/**
+ * School information text field functions
+ */
 
 var messageMap = {};
 d3.csv('resource/messages.csv', function(rows) {
@@ -76,7 +87,7 @@ function displayInfo() {
         $("#overlay").html('Try some combinations!');
 }
 
-// Converting actual category names to their corresponding key names
+// Converting category names to csv key name
 function schoolToKey() {
     var schoolName = $("#groupby").text().trim();
     if (schoolName == "Cluster")
@@ -92,6 +103,7 @@ function schoolToKey() {
     return "";
 }
 
+// Converting category names to csv key name
 function envToKey() {
     var environmentName = $("#environment").text().trim();
     if (environmentName == "Graffiti")
@@ -106,6 +118,10 @@ function envToKey() {
         return "enrollment";
     return "";
 }
+
+/**
+ * School and district dropdown coloring functions
+ */
 
 function color(property) {
   if (property == "LOW" || property == "D" || property == "F")
@@ -129,12 +145,7 @@ function colorDistrict(property) {
     return envNa;
 }
 
-function toTitleCase(str)
-{
-    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-}
-
-// group by dropdown handling
+// School factors
 d3.select("#none").on("click", function() {
     d3.selectAll("circle")
         .style("fill", "blue");
@@ -177,7 +188,7 @@ function colorSchools(name, key) {
     displayInfo();
 }
 
-// environment factors
+// Environment factors
 d3.select("#mapnone").on("click", function() {
     removeLegend("envLegend");
 
@@ -219,7 +230,10 @@ function colorEnvironment(name, key) {
     displayInfo();
 }
 
-// plot the school districts and school points
+/**
+ * Actually plotting school districts and schools
+ */
+
 function plotSchoolDistricts() {
     d3.json("json/districts_merged.json", function(error, nyb) {
         smap.attr("id", "schooldistrict")
@@ -233,11 +247,12 @@ function plotSchoolDistricts() {
     });
 }
 
-function plotPrecincts() {
+function toTitleCase(str)
+{
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
 var circle_r = 5;
-
 function plotSchools() {
     d3.json("json/schools_trim_merged.json", function(error, school) {
         var mouseDuration = 150;
@@ -285,7 +300,7 @@ function plotSchools() {
     });
 }
 
-// zoom
+// Zoom
 var zoom = d3.behavior.zoom()
     .on("zoom",function() {
         smap.attr("transform","translate("+ 
@@ -300,9 +315,13 @@ var zoom = d3.behavior.zoom()
 
 svg.call(zoom)
 
-// envLegend
+/**
+ * District and school legend functions
+ */
+
 function showLegend(className, xOffset) {
     var yOffset = 175;
+    // TODO: if-else's in here a little messy
     if (className == "envLegend") {
         var data = envLegendData;
         var title = "Environment";
